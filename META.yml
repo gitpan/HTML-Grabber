@@ -18,4 +18,4 @@ requires:
   Moose: 0.94
   XML::LibXML: 1.70
   perl: 5.010
-version: 0.1
+version: 0.2

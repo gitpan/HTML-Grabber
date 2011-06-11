@@ -1,6 +1,6 @@
 package HTML::Grabber;
 BEGIN {
-  $HTML::Grabber::VERSION = '0.1';
+  $HTML::Grabber::VERSION = '0.2';
 }
 
 # ABSTRACT: jQuery style DOM traversal/manipulation
@@ -218,9 +218,16 @@ unique list
 =cut
 
 sub uniq {
-    my %uniq;
-    map { $uniq{$_->nodePath} //= $_; } @_;
-    return values %uniq;
+    my (@nodes) = @_;
+    my %seen;
+
+    my @unique;
+
+    foreach my $node ( @nodes ) {
+        push @unique, $node unless $seen{$node->nodePath}++;
+    }
+
+    return @unique;
 }
 
 __PACKAGE__->meta->make_immutable;

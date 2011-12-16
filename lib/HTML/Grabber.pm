@@ -1,17 +1,16 @@
 package HTML::Grabber;
 BEGIN {
-  $HTML::Grabber::VERSION = '0.2';
+  $HTML::Grabber::VERSION = '0.4';
 }
 
 # ABSTRACT: jQuery style DOM traversal/manipulation
 
-use 5.010;
 use strict;
 use warnings;
 
 use Moose;
 use HTML::Selector::XPath qw(selector_to_xpath);
-use XML::LibXML;
+use XML::LibXML qw(:libxml);
 
 my $parser = XML::LibXML->new;
 $parser->recover(1);
@@ -39,11 +38,11 @@ HTML::Grabber
 
     my $dom = HTML::Grabber->new( html => get('http://twitter.com/ned0r') );
 
-    $dom->find('li.status')->each(sub {
-        my $body = $_->find('.entry-content')->text;
-        my $when = $_->find('.entry-date')->text;
-        my $link = $_->find('a[rel="bookmark"]')->attr('href');
-        say "$body $when (link: $link)";
+    $dom->find('.tweet-content')->each(sub {
+        my $body = $_->find('.tweet-text')->text;
+        my $when = $_->find('.js-tweet-timestamp')->attr('data-time');
+        my $link = $_->find('.js-permalink')->attr('href');
+        print "$body $when (link: $link)\n";
     });
 
 =head1 DESCRIPTION
@@ -101,13 +100,83 @@ sub find {
     );
 }
 
-=head2 filter( $match )
+=head2 prev( [ $selector ] )
+
+Get the immediately preceding sibling of each element in the set of matched
+elements, optionally filtered by a selector.
+
+=cut
+sub prev {
+    my ($self, $selector) = @_;
+
+    my @nodes;
+    foreach my $node ( $self->nodes ) {
+        my $prev = $node;
+        do {
+            $prev = $prev->previousSibling;
+        } while $prev and $prev->nodeType != XML_ELEMENT_NODE;
+        push @nodes, $prev if $prev;
+    }
+    my $return = $self->new(
+        nodes => [uniq(@nodes)],
+    );
+    return $return->filter($selector) if $selector;
+    return $return;
+}
+
+=head2 next( [ $selector ] )
+
+Get the immediately preceding sibling of each element in the set of matched
+elements, optionally filtered by a selector.
+
+=cut
+sub next {
+    my ($self, $selector) = @_;
+
+    my @nodes;
+    foreach my $node ( $self->nodes ) {
+        my $next = $node;
+        do {
+            $next = $next->nextSibling;
+        } while $next and $next->nodeType != XML_ELEMENT_NODE;
+        push @nodes, $next if $next;
+    }
+    my $return = $self->new(
+        nodes => [uniq(@nodes)],
+    );
+    return $return->filter($selector) if $selector;
+    return $return;
+}
+
+=head2 filter( $selector )
+
+Reduce the set of matched elements to those that match the selector
+
+=cut
+
+sub filter {
+    my ($self, $selector) = @_;
+
+    my $xpath = selector_to_xpath($selector, root => '..');
+
+    my @nodes;
+
+    foreach my $node ( $self->nodes ) {
+        push @nodes, $node if grep { $node->isSameNode($_) } $node->findnodes($xpath);
+    }
+
+    return $self->new(
+        nodes => [uniq(@nodes)],
+    );
+}
+
+=head2 text_filter( $match )
 
 Filter the current set of matched elements to those that contain the text
 specified by $match. If you prefer, $match can also be a Regexp
 
 =cut
-sub filter {
+sub text_filter {
     my ($self, $match) = @_;
 
     my $regexp = $match;
@@ -151,6 +220,17 @@ sub text {
     return join('', map { $_->findvalue('.') } shift->nodes);
 }
 
+=head2 text_array()
+
+Return text for each element as a list
+
+=cut
+sub text_array {
+    my ($self) = @_;
+
+    return map { $_->findvalue('.') } shift->nodes;
+}
+
 =head2 html()
 
 Return the HTML of the currently matched elements
@@ -160,6 +240,17 @@ sub html {
     my ($self) = @_;
 
     return join('', map { $_->toString } shift->nodes);
+}
+
+=head2 html_array()
+
+Return the HTML each element as a list
+
+=cut
+sub html_array {
+    my ($self) = @_;
+
+    return map { $_->toString } shift->nodes;
 }
 
 =head2 remove()

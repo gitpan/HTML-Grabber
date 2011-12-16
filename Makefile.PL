@@ -2,9 +2,9 @@
 use strict;
 use warnings;
 
-BEGIN { require 5.010; }
+use 5.010;
 
-use ExtUtils::MakeMaker 6.31;
+use ExtUtils::MakeMaker 6.30;
 
 
 
@@ -15,7 +15,7 @@ my %WriteMakefileArgs = (
     'Test::More' => '0.88'
   },
   'CONFIGURE_REQUIRES' => {
-    'ExtUtils::MakeMaker' => '6.31'
+    'ExtUtils::MakeMaker' => '6.30'
   },
   'DISTNAME' => 'HTML-Grabber',
   'EXE_FILES' => [],
@@ -26,7 +26,7 @@ my %WriteMakefileArgs = (
     'Moose' => '0.94',
     'XML::LibXML' => '1.70'
   },
-  'VERSION' => '0.2',
+  'VERSION' => '0.4',
   'test' => {
     'TESTS' => 't/*.t'
   }

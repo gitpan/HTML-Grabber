@@ -1,0 +1,19 @@
+# Need to make sure the universe repositories are enabled (although if
+# you've already installed dh-make-perl then they definitely are)
+
+apt-get update
+apt-get install dh-make-perl
+
+apt-get install libmoose-perl libhtml-selector-xpath-perl libxml-libxml-perl
+
+# If dh-make-perl asks you about auto-configuration, just say yes and let
+# it do its thing
+
+dh-make-perl --cpan HTML::Grabber --build
+
+# Hopefully at this point you should have a .deb package to install like so:
+
+dpkg -i libhtml-grabber-perl_0.2-1_all.deb
+
+
+

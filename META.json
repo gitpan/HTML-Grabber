@@ -4,7 +4,7 @@
       "Martyn Smith <martyn@dollyfish.net.nz>"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Dist::Zilla version 4.200000, CPAN::Meta::Converter version 2.102400",
+   "generated_by" : "Dist::Zilla version 4.200009, CPAN::Meta::Converter version 2.110930",
    "license" : [
       "perl_5"
    ],
@@ -16,7 +16,7 @@
    "prereqs" : {
       "configure" : {
          "requires" : {
-            "ExtUtils::MakeMaker" : "6.31"
+            "ExtUtils::MakeMaker" : "6.30"
          }
       },
       "runtime" : {
@@ -34,6 +34,6 @@
       }
    },
    "release_status" : "stable",
-   "version" : "0.2"
+   "version" : "0.4"
 }
 

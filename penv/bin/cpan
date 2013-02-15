@@ -1,2 +1,0 @@
-#!/bin/sh
-echo "Don't use CPAN, it's made of fail (instead use cpanm)"

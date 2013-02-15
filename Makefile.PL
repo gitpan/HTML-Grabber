@@ -18,9 +18,7 @@ my %WriteMakefileArgs = (
     "ExtUtils::MakeMaker" => "6.30"
   },
   "DISTNAME" => "HTML-Grabber",
-  "EXE_FILES" => [
-    "bin/activate"
-  ],
+  "EXE_FILES" => [],
   "LICENSE" => "perl",
   "NAME" => "HTML::Grabber",
   "PREREQ_PM" => {
@@ -28,7 +26,7 @@ my %WriteMakefileArgs = (
     "Moose" => "0.94",
     "XML::LibXML" => "1.70"
   },
-  "VERSION" => "0.5",
+  "VERSION" => "0.6",
   "test" => {
     "TESTS" => "t/*.t"
   }

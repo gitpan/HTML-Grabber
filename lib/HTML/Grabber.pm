@@ -1,6 +1,6 @@
 package HTML::Grabber;
 {
-  $HTML::Grabber::VERSION = '0.5';
+  $HTML::Grabber::VERSION = '0.6';
 }
 
 # ABSTRACT: jQuery style DOM traversal/manipulation

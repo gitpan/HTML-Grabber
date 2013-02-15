@@ -1,6 +1,6 @@
 package HTML::Grabber;
-BEGIN {
-  $HTML::Grabber::VERSION = '0.4';
+{
+  $HTML::Grabber::VERSION = '0.5';
 }
 
 # ABSTRACT: jQuery style DOM traversal/manipulation
@@ -297,6 +297,25 @@ sub each {
         local $_ = $self->new(nodes => [$node]);
         $sub->($_);
     }
+}
+
+=head2 map
+
+Execute a sub for each matched node returning a list containing the result of
+each sub
+
+=cut
+sub map {
+    my ($self, $sub) = @_;
+
+    my @results;
+
+    foreach my $node ( $self->nodes ) {
+        local $_ = $self->new(nodes => [$node]);
+        push @results, $sub->($_);
+    }
+
+    return @results;
 }
 
 =head1 CLASS METHODS

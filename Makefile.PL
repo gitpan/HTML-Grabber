@@ -9,26 +9,28 @@ use ExtUtils::MakeMaker 6.30;
 
 
 my %WriteMakefileArgs = (
-  'ABSTRACT' => 'jQuery style DOM traversal/manipulation',
-  'AUTHOR' => 'Martyn Smith <martyn@dollyfish.net.nz>',
-  'BUILD_REQUIRES' => {
-    'Test::More' => '0.88'
+  "ABSTRACT" => "jQuery style DOM traversal/manipulation",
+  "AUTHOR" => "Martyn Smith <martyn\@dollyfish.net.nz>",
+  "BUILD_REQUIRES" => {
+    "Test::More" => "0.88"
   },
-  'CONFIGURE_REQUIRES' => {
-    'ExtUtils::MakeMaker' => '6.30'
+  "CONFIGURE_REQUIRES" => {
+    "ExtUtils::MakeMaker" => "6.30"
   },
-  'DISTNAME' => 'HTML-Grabber',
-  'EXE_FILES' => [],
-  'LICENSE' => 'perl',
-  'NAME' => 'HTML::Grabber',
-  'PREREQ_PM' => {
-    'HTML::Selector::XPath' => '0.03',
-    'Moose' => '0.94',
-    'XML::LibXML' => '1.70'
+  "DISTNAME" => "HTML-Grabber",
+  "EXE_FILES" => [
+    "bin/activate"
+  ],
+  "LICENSE" => "perl",
+  "NAME" => "HTML::Grabber",
+  "PREREQ_PM" => {
+    "HTML::Selector::XPath" => "0.03",
+    "Moose" => "0.94",
+    "XML::LibXML" => "1.70"
   },
-  'VERSION' => '0.4',
-  'test' => {
-    'TESTS' => 't/*.t'
+  "VERSION" => "0.5",
+  "test" => {
+    "TESTS" => "t/*.t"
   }
 );
 

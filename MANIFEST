@@ -9,6 +9,7 @@ README
 README.md
 dist.ini
 lib/HTML/Grabber.pm
+pants.pl
 synopsis.pl
 t/00-load.t
 t/02pod.t
